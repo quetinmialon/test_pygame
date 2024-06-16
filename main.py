@@ -5,6 +5,10 @@ from Game import Game
 
 pygame.init()
 
+clock = pygame.time.Clock()
+FPS = 60
+
+
 pygame.display.set_caption('tree vs momies')
 screen = pygame.display.set_mode((1080,720))
 background = pygame.image.load('assets/bg.jpg')
@@ -23,12 +27,12 @@ while running:
     screen.blit(background, (0,-200))
     if game.is_playing : 
         game.update(screen)
-    else :
+    else :   
         screen.blit(play_button,(play_button_rect))
         screen.blit(banner,(banner_rect))
     
     pygame.display.flip()
-
+   
     for event in pygame.event.get():
 
         if event.type == pygame.QUIT:
@@ -44,5 +48,7 @@ while running:
 
         elif event.type == pygame.MOUSEBUTTONDOWN :
             if play_button_rect.collidepoint(event.pos):
-                game.start()  
-        
+                game.start()
+                game.sound_manager.play('click')
+                
+    clock.tick(FPS)

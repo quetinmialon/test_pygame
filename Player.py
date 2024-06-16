@@ -1,17 +1,16 @@
 import pygame
 from Missile import Missile
+import animation
 
-
-class Player(pygame.sprite.Sprite): 
+class Player(animation.AnimateSprite): 
     def __init__(self, Game):
-        super().__init__()
+        super().__init__('player')
         self.game = Game
         self.health = 100
         self.max_health = 100
         self.attack = 10
         self.velocity = 3
         self.all_missiles = pygame.sprite.Group()
-        self.image = pygame.image.load('assets/player.png')
         self.rect = self.image.get_rect()
         self.rect.y = 500
         self.rect.x = 0
@@ -26,6 +25,11 @@ class Player(pygame.sprite.Sprite):
     
     def launch_missile(self):
         self.all_missiles.add(Missile(self))
+        self.start_animation()
+        self.game.sound_manager.play('tir')
+    
+    def update_animation(self):
+        self.animate()
 
     def update_health_bar(self, surface):
       
